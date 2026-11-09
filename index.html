@@ -25,4 +25,75 @@ header{flex-wrap:wrap}nav{flex-wrap:wrap;justify-content:center;gap:12px 19px}
 // EDIT YOUR POSTS HERE: add new objects with title, category, excerpt and body.
 const entries=[{"title": "to the girl i used to be, we've come a long way.", "category": "the art of becoming", "excerpt": "A letter about growing, letting go, and learning to meet myself with kindness. · October 18, 2026", "body": "dear diary,\n\nlately, i've been thinking about how much i've changed.\n\nnot in the loud, extraordinary kind of way. not in a way that people would immediately notice. but in the quiet little moments when i catch myself responding differently to things that once would have completely broken me.\n\nand i think that's growth, too.\n\nthe past few months have been a strange mixture of beautiful beginnings, difficult realizations, unexpected goodbyes, and moments when i genuinely didn't know what i was doing with my life.\n\nthere were days when i felt like i was exactly where i was supposed to be. and there were days when even getting through my responsibilities felt like an accomplishment.\n\ni've spent so much of my life trying to become someone. someone accomplished, someone dependable, someone worthy of all the dreams i've carried since i was younger.\n\nand somewhere along the way, i think i forgot that i'm already someone, even before achieving all those things.\n\ni'm learning that my worth doesn't begin when i finally become a doctor. that i am allowed to be a person outside the hospital, outside my responsibilities, outside everyone's expectations.\n\ni'm allowed to be tired. to make mistakes. to change my mind. to discover that some dreams no longer fit the person i'm becoming.\n\nand perhaps most importantly, i'm allowed to begin again.\n\nthere's also something about growing older that makes you understand people differently.\n\ni used to think that caring meant holding on. that loving people meant finding ways to keep them in my life, no matter how complicated things became.\n\nbut lately, i've been learning that sometimes, caring is quieter than that.\n\nsometimes, it's wishing someone well without expecting anything in return. sometimes, it's accepting that a connection can be meaningful even when it doesn't last the way you hoped.\n\nand sometimes, it's choosing not to abandon yourself while trying to understand someone else.\n\ni'm still learning that one.\n\nthere are things i wish i had handled differently. conversations i replay in my head. versions of myself i wish i could go back and comfort.\n\nbut i'm trying not to look at my past self with disappointment anymore.\n\nshe was doing the best she could with what she knew, what she felt, and what she had at the time.\n\nand maybe she deserves a little more tenderness than i've been giving her.\n\nthese days, i'm learning to appreciate the ordinary things again.\n\na peaceful morning. a conversation that makes me laugh. a little kindness from a stranger. the quiet satisfaction of surviving a long day. the realization that despite everything, there are still so many things i want to experience.\n\ni still have dreams. big ones, actually.\n\ni still want to become a good doctor. i still want to make a difference. i still want a life filled with meaningful connections, beautiful memories, and the kind of happiness that doesn't require me to constantly prove that i deserve it.\n\nbut i'm no longer in such a hurry to have everything figured out.\n\ni'm beginning to understand that growing isn't always about becoming stronger.\n\nsometimes, it's about becoming softer without becoming fragile.\n\nit's about learning when to stay, when to leave, when to speak, and when to simply let things be.\n\nit's about forgiving yourself for not knowing better sooner.\n\nand it's about realizing that you can be both a work in progress and someone worth loving, exactly as you are.\n\ni don't know what the next few months will bring.\n\nmaybe i'll make more mistakes. maybe i'll change my mind a hundred times. maybe i'll meet people who will change the way i see the world.\n\nbut i hope that when i look back at this version of myself someday, i'll remember her kindly.\n\nbecause she kept going.\n\neven when things felt uncertain.\n\neven when her heart was tired.\n\neven when becoming herself was a little more difficult than she expected.\n\nand for now, i think that's enough.\n\nhere's to the person i was, the person i am, and all the versions of me i have yet to meet."},{title:'dear diary, this is where i begin',category:'dear diary',excerpt:'Every story has a beginning. This is mine.',body:`Dear diary,\n\nI have always wanted a place to keep the things I don't want to forget. Not because every day is extraordinary, but because even ordinary days become memories.\n\nSo this is my beginning: a quiet little promise to notice my life as it unfolds. I don't need perfect words, only honest ones.\n\nHere's to every version of me I have been, and every version I have yet to meet.`},{title:'the girl beneath the white coat',category:'becoming, m.d.',excerpt:'A gentle reminder that I am more than the dream I am chasing.',body:`Sometimes the dream of becoming a doctor feels so big that it fills every corner of my life. But there is still a girl beneath the white coat — one who loves stories, quiet mornings, flowers, and people.\n\nI hope I never forget her as I grow into the physician I want to be.`},{title:'on the art of becoming',category:'the art of becoming',excerpt:'There is no deadline for growing into yourself.',body:`Perhaps becoming isn't one grand transformation. Perhaps it's a thousand small decisions: to keep trying, to forgive yourself, to begin again.\n\nI am learning that I can be unfinished and still be worthy of a beautiful life.`},{title:'letters i may never send',category:'letters never sent',excerpt:'For all the words that found a home on paper instead.',body:`Some words are not meant to arrive anywhere. They are meant to be written, held for a moment, and gently released.\n\nThis is a space for those words.`},{title:'the little things lately',category:'little joys',excerpt:'A growing collection of moments that made an ordinary day feel softer.',body:`A warm cup of something sweet. The sky changing colors on the way home. A song that understands me.\n\nI'm keeping these little things here, so I remember that happiness can be quiet, too.`}];
 const categories=['all','dear diary','becoming, m.d.','letters never sent','little joys','the art of becoming','little rambles','the writing nook','the rage room'];let active='all';const posts=document.getElementById('posts'),filters=document.getElementById('filters');function showCategory(category){active=category;render();document.getElementById('diaries').scrollIntoView({behavior:'smooth'});}function render(){filters.innerHTML='';categories.forEach(c=>{const b=document.createElement('button');b.className='chip'+(c===active?' active':'');b.textContent=c;b.onclick=()=>{active=c;render()};filters.appendChild(b)});posts.innerHTML='';const visible=entries.filter(e=>active==='all'||e.category===active);if(!visible.length){const empty=document.createElement('p');empty.className='empty';empty.textContent='This little corner is waiting for its first story. ♡';posts.appendChild(empty);}visible.forEach(e=>{const card=document.createElement('article');card.className='post';const tag=document.createElement('div');tag.className='tag';tag.textContent=e.category;const h=document.createElement('h3');h.textContent=e.title;const p=document.createElement('p');p.textContent=e.excerpt;const btn=document.createElement('button');btn.className='button';btn.textContent='read letter →';btn.onclick=()=>{document.getElementById('readerTag').textContent=e.category;document.getElementById('readerTitle').textContent=e.title;document.getElementById('readerBody').textContent=e.body;document.getElementById('reader').showModal()};card.append(tag,h,p,btn);posts.appendChild(card)})}render();document.getElementById('year').textContent=new Date().getFullYear();
+
+// Pages CMS integration: read public Markdown files saved under _posts/.
+// GitHub Pages hosts this site at shioridiaries/the-shiori-diaries.
+// The original six posts remain in the entries array above as a fallback.
+const CMS_REPO='shioridiaries/the-shiori-diaries';
+const CMS_FOLDER='_posts';
+function parseFrontmatter(markdown){
+  const normalized=markdown.replace(/^\uFEFF/,'').replace(/\r\n?/g,'\n');
+  const match=normalized.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+  const meta={};
+  if(match){
+    let current='';
+    for(const line of match[1].split('\n')){
+      const item=line.match(/^([\w-]+):\s*(.*)$/);
+      if(item){current=item[1];meta[current]=item[2].trim().replace(/^['"]|['"]$/g,'');}
+      else if(current && /^\s+/.test(line))meta[current]+=' '+line.trim();
+    }
+  }
+  return {meta,body:match?normalized.slice(match[0].length).trim():normalized.trim()};
+}
+function decodeBase64UTF8(encoded){
+  const binary=atob(encoded.replace(/\s/g,''));
+  const bytes=Uint8Array.from(binary,c=>c.charCodeAt(0));
+  return new TextDecoder('utf-8').decode(bytes);
+}
+function readableMarkdown(md){
+  // Keep text readable and safe in the existing text-only diary modal.
+  return md.replace(/!\[([^\]]*)\]\([^)]*\)/g,'[photo: $1]')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g,'$1 ($2)')
+    .replace(/^\s{0,3}#{1,6}\s+/gm,'')
+    .replace(/(\*\*|__)(.*?)\1/g,'$2')
+    .replace(/(\*|_)(.*?)\1/g,'$2')
+    .replace(/^>\s?/gm,'')
+    .trim();
+}
+async function loadCMSPosts(){
+  try{
+    const root=`https://api.github.com/repos/${CMS_REPO}/contents/${CMS_FOLDER}?ref=main`;
+    const response=await fetch(root,{headers:{Accept:'application/vnd.github+json'},cache:'no-store'});
+    if(response.status===404)return; // Folder not created yet; existing posts remain.
+    if(!response.ok)throw Error('GitHub returned '+response.status);
+    const files=await response.json();
+    if(!Array.isArray(files))return;
+    const markdownFiles=files.filter(f=>f.type==='file' && /\.(md|markdown)$/i.test(f.name));
+    const loaded=await Promise.all(markdownFiles.map(async file=>{
+      try{
+        const r=await fetch(file.url,{headers:{Accept:'application/vnd.github+json'},cache:'no-store'});
+        if(!r.ok)return null;
+        const data=await r.json();
+        const {meta,body}=parseFrontmatter(decodeBase64UTF8(data.content||''));
+        if(!body)return null;
+        const title=meta.title||file.name.replace(/^(\d{4}-\d{2}-\d{2})-/,'').replace(/\.(md|markdown)$/i,'').replace(/-/g,' ');
+        const category=(meta.category||'dear diary').toLowerCase().trim();
+        const date=meta.date||((file.name.match(/^\d{4}-\d{2}-\d{2}/)||[])[0])||'';
+        const clean=readableMarkdown(body);
+        const excerpt=meta.excerpt||meta.description||clean.replace(/\s+/g,' ').slice(0,155)+(clean.length>155?'…':'');
+        return {title,category,excerpt,body:clean,date};
+      }catch(err){console.warn('Could not read CMS post',file.name,err);return null;}
+    }));
+    const newPosts=loaded.filter(Boolean);
+    if(!newPosts.length)return;
+    // Prefer CMS versions of a post if its title matches a built-in sample.
+    const names=new Set(newPosts.map(p=>p.title.toLocaleLowerCase().trim()));
+    const original=entries.filter(p=>!names.has(p.title.toLocaleLowerCase().trim()));
+    newPosts.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+    entries.splice(0,entries.length,...newPosts,...original);
+    for(const post of newPosts)if(!categories.includes(post.category))categories.push(post.category);
+    render();
+  }catch(err){console.warn('CMS posts temporarily unavailable; showing original diary entries.',err);}
+}
+loadCMSPosts();
 </script></body></html>
