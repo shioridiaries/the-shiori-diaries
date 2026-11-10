@@ -1,0 +1,148 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>A Whisper Returned ♡</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background: #fff9f5;
+    color: #765b66;
+    font-family: Georgia, serif;
+    padding: 24px;
+  }
+  main {
+    width: 100%;
+    max-width: 560px;
+    padding: 42px 30px;
+    border: 1px solid #ead8dc;
+    border-radius: 20px;
+    background: #fffdfb;
+    text-align: center;
+  }
+  .eyebrow {
+    font: 11px Arial, sans-serif;
+    letter-spacing: 2px;
+    color: #aa8995;
+  }
+  h1 {
+    font-size: 34px;
+    font-weight: normal;
+    margin: 20px 0;
+  }
+  p { line-height: 1.8; }
+  #reply {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    padding: 22px;
+    margin-top: 22px;
+    background: #fdf3f3;
+    border-radius: 14px;
+    text-align: left;
+    line-height: 1.8;
+  }
+  button, a {
+    color: #946d7d;
+    font: 14px Arial, sans-serif;
+  }
+  button {
+    background: #f5e4e8;
+    border: 0;
+    border-radius: 10px;
+    padding: 12px 20px;
+    cursor: pointer;
+    margin-top: 18px;
+  }
+  .back { display: block; margin-top: 28px; }
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">✧ WHISPERS IN THE WOODS ✧</div>
+  <h1>a whisper returned ♡</h1>
+  <p id="status">Looking for your little letter...</p>
+  <div id="reply" hidden></div>
+  <button id="refresh" hidden>Check again ♡</button>
+  <a class="back" href="./index.html">return to the forest ♡</a>
+</main>
+
+<script>
+const API =
+  "https://meqthelkquygnmzzhzpa.supabase.co" +
+  "/functions/v1/read-whisper-reply";
+
+const statusEl = document.getElementById("status");
+const replyEl = document.getElementById("reply");
+const refreshBtn = document.getElementById("refresh");
+
+const token = new URLSearchParams(
+  location.hash.slice(1)
+).get("token");
+
+// Remove the secret from the visible URL after reading it.
+history.replaceState(null, "", location.pathname);
+
+async function loadReply() {
+  replyEl.hidden = true;
+  refreshBtn.hidden = true;
+
+  if (!token || !/^[0-9a-f]{64}$/.test(token)) {
+    statusEl.textContent =
+      "This private link is missing or invalid.";
+    return;
+  }
+
+  statusEl.textContent = "Checking your little letter...";
+
+  try {
+    const response = await fetch(API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ token }),
+      cache: "no-store"
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      statusEl.textContent =
+        response.status === 404
+          ? "We couldn't find this private letter."
+          : "Couldn't check your letter right now.";
+      refreshBtn.hidden = false;
+      return;
+    }
+
+    if (!data.replied) {
+      statusEl.textContent =
+        "Your whisper is safe in the forest. " +
+        "Rinshi hasn't replied yet. Come back soon ♡";
+    } else {
+      statusEl.textContent =
+        "A little reply has found its way to you ♡";
+      replyEl.textContent = data.reply || "";
+      replyEl.hidden = false;
+    }
+
+    refreshBtn.hidden = false;
+  } catch {
+    statusEl.textContent =
+      "Unable to connect. Please try again.";
+    refreshBtn.hidden = false;
+  }
+}
+
+refreshBtn.addEventListener("click", loadReply);
+loadReply();
+</script>
+</body>
+</html>
