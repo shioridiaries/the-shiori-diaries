@@ -1,4 +1,3 @@
-
 media:
   input: media
   output: /media
@@ -36,3 +35,26 @@ content:
         label: Your Writing
         type: rich-text
         required: true
+
+  - name: glimpses
+    label: Little Glimpses
+    type: collection
+    path: _glimpses
+    view:
+      fields: [title, date]
+    fields:
+      - name: title
+        label: Polaroid caption
+        type: string
+        required: true
+      - name: date
+        label: Date
+        type: date
+        required: true
+      - name: image
+        label: Photo
+        type: image
+        required: true
+      - name: body
+        label: Little story
+        type: rich-text
