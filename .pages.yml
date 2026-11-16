@@ -27,6 +27,10 @@ content:
         options:
           values:
             - Dear Diary
+            - Becoming, M.D.
+            - Letters Never Sent
+            - Little Joys
+            - The Art of Becoming
             - Little Rambles
             - The Writing Nook
             - The Rage Room
@@ -47,14 +51,17 @@ content:
         label: Polaroid caption
         type: string
         required: true
+
       - name: date
         label: Date
         type: date
         required: true
+
       - name: image
         label: Photo
         type: image
         required: true
+
       - name: body
         label: Little story
         type: rich-text
